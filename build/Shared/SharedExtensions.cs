@@ -43,12 +43,7 @@ namespace NuGet.Shared
             }
             else
             {
-                if (comparer == null)
-                {
-                    comparer = EqualityComparer<T>.Default;
-                }
-
-                return new HashSet<T>(enumerable, comparer);
+                return new HashSet<T>(enumerable, comparer ?? EqualityComparer<T>.Default);
             }
         }
 
