@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Build.Framework;
@@ -25,7 +26,7 @@ namespace NuGet.Build.Tasks.Pack
         {
             if (items == null)
             {
-                return new IMSBuildItem[0];
+                return Array.Empty<IMSBuildItem>();
             }
 
             return items

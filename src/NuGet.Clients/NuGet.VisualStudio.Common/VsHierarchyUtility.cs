@@ -190,7 +190,7 @@ namespace NuGet.VisualStudio
             if (solutionExplorerWindow == null)
             {
                 // If the solution explorer is collapsed since opening VS, this value is null. In such a case, simply exit early.
-                return new VsHierarchyItem[0];
+                return Array.Empty<VsHierarchyItem>();
             }
 
             var expandedItems = new List<VsHierarchyItem>();

@@ -18,7 +18,7 @@ namespace NuGet.Packaging.Core
     /// </remarks>
     public class PackageDependencyInfo : PackageIdentity, IEquatable<PackageDependencyInfo>
     {
-        private readonly static PackageDependency[] EmptyDependencies = new PackageDependency[0];
+        private readonly static PackageDependency[] EmptyDependencies = Array.Empty<PackageDependency>();
         private PackageDependency[] _dependencies;
 
         public PackageDependencyInfo(string id, NuGetVersion version)
