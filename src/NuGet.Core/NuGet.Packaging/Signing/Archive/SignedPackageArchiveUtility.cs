@@ -482,7 +482,7 @@ namespace NuGet.Packaging.Signing
                 SignedPackageArchiveIOUtility.HashBytes(hashAlgorithm, BitConverter.GetBytes(eocdrTotalEntries));
                 SignedPackageArchiveIOUtility.HashBytes(hashAlgorithm, BitConverter.GetBytes(eocdrTotalEntriesOnDisk));
 
-                // update the central directory size by substracting the size of the package signature file's central directory header
+                // update the central directory size by subtracting the size of the package signature file's central directory header
                 var eocdrSizeOfCentralDirectory = (uint)(reader.ReadUInt32() - signatureCentralDirectoryHeader.HeaderSize);
                 SignedPackageArchiveIOUtility.HashBytes(hashAlgorithm, BitConverter.GetBytes(eocdrSizeOfCentralDirectory));
 
@@ -597,7 +597,7 @@ namespace NuGet.Packaging.Signing
                 SignedPackageArchiveIOUtility.HashBytes(hashFunc, BitConverter.GetBytes(eocdrTotalEntries));
                 SignedPackageArchiveIOUtility.HashBytes(hashFunc, BitConverter.GetBytes(eocdrTotalEntriesOnDisk));
 
-                // update the central directory size by substracting the size of the package signature file's central directory header
+                // update the central directory size by subtracting the size of the package signature file's central directory header
                 var eocdrSizeOfCentralDirectory = (uint)(reader.ReadUInt32() - signatureCentralDirectoryHeader.HeaderSize);
                 SignedPackageArchiveIOUtility.HashBytes(hashFunc, BitConverter.GetBytes(eocdrSizeOfCentralDirectory));
 
