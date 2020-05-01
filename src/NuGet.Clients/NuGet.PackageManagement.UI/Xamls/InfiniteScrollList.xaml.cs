@@ -135,6 +135,7 @@ namespace NuGet.PackageManagement.UI
         internal async Task LoadItemsAsync(
             IPackageItemLoader loader,
             string loadingMessage,
+            ItemFilter tabToRender,
             INuGetUILogger logger,
             Task<SearchResult<IPackageSearchMetadata>> searchResultTask,
             CancellationToken token)
@@ -174,7 +175,7 @@ namespace NuGet.PackageManagement.UI
             _selectedCount = 0;
 
             // triggers the package list loader
-            LoadItems(selectedPackageItem, token);
+            LoadItems(selectedPackageItem, token, tabToRender == ItemFilter.UpdatesAvailable);
         }
 
         /// <summary>
@@ -195,7 +196,7 @@ namespace NuGet.PackageManagement.UI
             _list.SelectedItem = selectedItem ?? PackageItems.FirstOrDefault();
         }
 
-        private void LoadItems(PackageItemListViewModel selectedPackageItem, CancellationToken token)
+        private void LoadItems(PackageItemListViewModel selectedPackageItem, CancellationToken token, bool isUpdatesTab = false)
         {
             // If there is another async loading process - cancel it.
             var loadCts = CancellationTokenSource.CreateLinkedTokenSource(token);
@@ -221,6 +222,16 @@ namespace NuGet.PackageManagement.UI
                     await LoadItemsCoreAsync(currentLoader, loadCts.Token);
 
                     await _joinableTaskFactory.Value.SwitchToMainThreadAsync();
+
+                    //If we're loading the Updates tab, then apply a filter.
+                    if (isUpdatesTab)
+                    {
+                        ApplyItemsFilterForUpdatesAvailable();
+                    }
+                    else
+                    {
+                        ClearItemsFilterForUpdatesAvailable();
+                    }
 
                     if (selectedPackageItem != null)
                     {
@@ -316,17 +327,15 @@ namespace NuGet.PackageManagement.UI
 
                         await _joinableTaskFactory.Value.SwitchToMainThreadAsync();
 
-                        var view = CollectionViewSource.GetDefaultView(Items);
-
                         //**********************************************************************************
                         if (itemFilter == ItemFilter.UpdatesAvailable)
                         {
-                            view.Filter = (item) => item == _loadingStatusIndicator || (item as PackageItemListViewModel).IsUpdateAvailable;
+                            ApplyItemsFilterForUpdatesAvailable();
                         }
                         else
                         {
                             //Show all the items, without an Update filter.
-                            view.Filter = null;
+                            ClearItemsFilterForUpdatesAvailable();
                         }
                     }
                 }
@@ -390,6 +399,17 @@ namespace NuGet.PackageManagement.UI
 
                 LoadItemsCompleted?.Invoke(this, EventArgs.Empty);
             });
+        }
+
+        private void ApplyItemsFilterForUpdatesAvailable()
+        {
+            var view = CollectionViewSource.GetDefaultView(Items);
+            view.Filter = (item) => item == _loadingStatusIndicator || (item as PackageItemListViewModel).IsUpdateAvailable;
+        }
+        private void ClearItemsFilterForUpdatesAvailable()
+        {
+            var view = CollectionViewSource.GetDefaultView(Items);
+            view.Filter = null;
         }
 
         private async Task LoadItemsCoreAsync(IPackageItemLoader currentLoader, CancellationToken token)
