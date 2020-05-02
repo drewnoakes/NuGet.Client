@@ -798,6 +798,7 @@ namespace NuGet.PackageManagement.UI
                         IncludePrerelease = IncludePrerelease
                     };
 
+                    //TODO: this is wrong.
                     var updateCount = _packageList.FilterCount;
                     _topPanel.UpdateCountOnUpdatesTab(updateCount);
                 }
