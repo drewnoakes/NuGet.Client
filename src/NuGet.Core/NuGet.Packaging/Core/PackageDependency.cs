@@ -14,7 +14,6 @@ namespace NuGet.Packaging.Core
     public class PackageDependency : IEquatable<PackageDependency>
     {
         private VersionRange _versionRange;
-        private static readonly List<string> EmptyList = new List<string>();
 
         /// <summary>
         /// Dependency package Id
@@ -62,8 +61,8 @@ namespace NuGet.Packaging.Core
 
             Id = id;
             _versionRange = versionRange ?? VersionRange.All;
-            Include = include ?? EmptyList;
-            Exclude = exclude ?? EmptyList;
+            Include = include ?? Array.Empty<string>();
+            Exclude = exclude ?? Array.Empty<string>();
         }
 
         public bool Equals(PackageDependency other)
