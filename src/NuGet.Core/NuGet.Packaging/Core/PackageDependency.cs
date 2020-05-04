@@ -13,8 +13,6 @@ namespace NuGet.Packaging.Core
     /// </summary>
     public class PackageDependency : IEquatable<PackageDependency>
     {
-        private VersionRange _versionRange;
-
         /// <summary>
         /// Dependency package Id
         /// </summary>
@@ -33,10 +31,7 @@ namespace NuGet.Packaging.Core
         /// <summary>
         /// Range of versions allowed for the dependency
         /// </summary>
-        public VersionRange VersionRange
-        {
-            get { return _versionRange; }
-        }
+        public VersionRange VersionRange { get; }
 
         public PackageDependency(string id)
             : this(id, VersionRange.All)
@@ -60,7 +55,7 @@ namespace NuGet.Packaging.Core
             }
 
             Id = id;
-            _versionRange = versionRange ?? VersionRange.All;
+            VersionRange = versionRange ?? VersionRange.All;
             Include = include ?? Array.Empty<string>();
             Exclude = exclude ?? Array.Empty<string>();
         }

@@ -13,9 +13,6 @@ namespace NuGet.Versioning
     /// </summary>
     public partial class VersionRange : VersionRangeBase, IFormattable
     {
-        private readonly FloatRange _floatRange;
-        private readonly string _originalString;
-
         /// <summary>
         /// Creates a range that is greater than or equal to the minVersion.
         /// </summary>
@@ -62,8 +59,8 @@ namespace NuGet.Versioning
             bool includeMaxVersion = false, FloatRange floatRange = null, string originalString = null)
             : base(minVersion, includeMinVersion, maxVersion, includeMaxVersion)
         {
-            _floatRange = floatRange;
-            _originalString = originalString;
+            Float = floatRange;
+            OriginalString = originalString;
         }
 
         /// <summary>
@@ -77,18 +74,12 @@ namespace NuGet.Versioning
         /// <summary>
         /// Optional floating range used to determine the best version match.
         /// </summary>
-        public FloatRange Float
-        {
-            get { return _floatRange; }
-        }
+        public FloatRange Float { get; }
 
         /// <summary>
         /// Original string being parsed to this object.
         /// </summary>
-        public string OriginalString
-        {
-            get { return _originalString; }
-        }
+        public string OriginalString { get; }
 
         /// <summary>
         /// Normalized range string.
@@ -208,12 +199,12 @@ namespace NuGet.Versioning
             // If the range contains only stable versions disallow prerelease versions
             if (!HasPrereleaseBounds
                 && considering.IsPrerelease
-                && _floatRange?.FloatBehavior != NuGetVersionFloatBehavior.Prerelease
-                && _floatRange?.FloatBehavior != NuGetVersionFloatBehavior.PrereleaseMajor
-                && _floatRange?.FloatBehavior != NuGetVersionFloatBehavior.PrereleaseMinor
-                && _floatRange?.FloatBehavior != NuGetVersionFloatBehavior.PrereleasePatch
-                && _floatRange?.FloatBehavior != NuGetVersionFloatBehavior.PrereleaseRevision
-                && _floatRange?.FloatBehavior != NuGetVersionFloatBehavior.AbsoluteLatest)
+                && Float?.FloatBehavior != NuGetVersionFloatBehavior.Prerelease
+                && Float?.FloatBehavior != NuGetVersionFloatBehavior.PrereleaseMajor
+                && Float?.FloatBehavior != NuGetVersionFloatBehavior.PrereleaseMinor
+                && Float?.FloatBehavior != NuGetVersionFloatBehavior.PrereleasePatch
+                && Float?.FloatBehavior != NuGetVersionFloatBehavior.PrereleaseRevision
+                && Float?.FloatBehavior != NuGetVersionFloatBehavior.AbsoluteLatest)
             {
                 return false;
             }
@@ -232,8 +223,8 @@ namespace NuGet.Versioning
             if (IsFloating)
             {
                 // check if either version is in the floating range
-                var curInRange = _floatRange.Satisfies(current);
-                var conInRange = _floatRange.Satisfies(considering);
+                var curInRange = Float.Satisfies(current);
+                var conInRange = Float.Satisfies(considering);
 
                 if (curInRange && !conInRange)
                 {
@@ -253,8 +244,8 @@ namespace NuGet.Versioning
                 else
                 {
                     // neither are in range
-                    var curToLower = current < _floatRange.MinVersion;
-                    var conToLower = considering < _floatRange.MinVersion;
+                    var curToLower = current < Float.MinVersion;
+                    var conToLower = considering < Float.MinVersion;
 
                     if (curToLower && !conToLower)
                     {
