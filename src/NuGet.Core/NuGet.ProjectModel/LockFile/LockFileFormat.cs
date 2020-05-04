@@ -175,7 +175,7 @@ namespace NuGet.ProjectModel
             };
 
             lockFile.LogMessages = ReadLogMessageArray(cursor[LogsProperty] as JArray,
-                lockFile?.PackageSpec?.RestoreMetadata?.ProjectPath);
+                lockFile.PackageSpec?.RestoreMetadata?.ProjectPath);
 
             return lockFile;
         }
