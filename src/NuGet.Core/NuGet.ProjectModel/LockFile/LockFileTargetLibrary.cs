@@ -156,5 +156,7 @@ namespace NuGet.ProjectModel
 
             return combiner.CombinedHash;
         }
+
+        public override string ToString() => $"{Type} {Name} {Version}";
     }
 }

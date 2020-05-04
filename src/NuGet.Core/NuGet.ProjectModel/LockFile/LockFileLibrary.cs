@@ -107,5 +107,7 @@ namespace NuGet.ProjectModel
                 MSBuildProject = MSBuildProject
             };
         }
+
+        public override string ToString() => $"{Type} {Name} {Version}";
     }
 }

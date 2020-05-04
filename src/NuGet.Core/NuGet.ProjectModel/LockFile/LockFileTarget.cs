@@ -61,5 +61,7 @@ namespace NuGet.ProjectModel
 
             return combiner.CombinedHash;
         }
+
+        public override string ToString() => $"{Name}{(string.IsNullOrEmpty(RuntimeIdentifier) ? "" : $" {RuntimeIdentifier}")} {(Libraries.Count == 1 ? "1 library" : Libraries.Count + " libraries")}";
     }
 }
