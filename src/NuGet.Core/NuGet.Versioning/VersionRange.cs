@@ -119,10 +119,8 @@ namespace NuGet.Versioning
         /// </summary>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            string formattedString = null;
-
             if (formatProvider == null
-                || !TryFormatter(format, formatProvider, out formattedString))
+                || !TryFormatter(format, formatProvider, out var formattedString))
             {
                 formattedString = ToString();
             }
@@ -138,14 +136,10 @@ namespace NuGet.Versioning
             var formatted = false;
             formattedString = null;
 
-            if (formatProvider != null)
+            if (formatProvider?.GetFormat(GetType()) is ICustomFormatter formatter)
             {
-                var formatter = formatProvider.GetFormat(this.GetType()) as ICustomFormatter;
-                if (formatter != null)
-                {
-                    formatted = true;
-                    formattedString = formatter.Format(format, this, formatProvider);
-                }
+                formatted = true;
+                formattedString = formatter.Format(format, this, formatProvider);
             }
 
             return formatted;
@@ -191,7 +185,7 @@ namespace NuGet.Versioning
             }
 
             // null checks
-            if (ReferenceEquals(considering, null))
+            if (considering is null)
             {
                 return false;
             }
@@ -215,7 +209,7 @@ namespace NuGet.Versioning
                 return false;
             }
 
-            if (ReferenceEquals(current, null))
+            if (current is null)
             {
                 return true;
             }

@@ -62,14 +62,13 @@ namespace NuGet.ProjectModel
         {
             if (jObject != null)
             {
-                JToken value;
-                if (jObject.TryGetValue(propertyName, out value) && value != null)
+                if (jObject.TryGetValue(propertyName, out var value) && value != null)
                 {
                     return value.Value<TItem>();
                 }
             }
 
-            return default(TItem);
+            return default;
         }
 
         internal static IList<TItem> ReadObject<TItem>(JObject jObject, Func<string, JToken, TItem> readItem)

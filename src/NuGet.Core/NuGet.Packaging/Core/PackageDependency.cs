@@ -67,14 +67,7 @@ namespace NuGet.Packaging.Core
 
         public override bool Equals(object obj)
         {
-            var dependency = obj as PackageDependency;
-
-            if (dependency != null)
-            {
-                return Equals(dependency);
-            }
-
-            return false;
+            return obj is PackageDependency dependency && Equals(dependency);
         }
 
         /// <summary>
