@@ -32,7 +32,7 @@ namespace NuGet.Packaging.Core
         public IReadOnlyList<string> Exclude { get; }
 
         /// <summary>
-        /// Range of versions allowed for the depenency
+        /// Range of versions allowed for the dependency
         /// </summary>
         public VersionRange VersionRange
         {

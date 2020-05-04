@@ -320,7 +320,7 @@ namespace NuGet.ProjectModel
         /// Converts the <code>IAssetsLogMessage</code> object into a <code>JObject</code> that can be written into the assets file.
         /// </summary>
         /// <param name="logMessage"><code>IAssetsLogMessage</code> representing the log message.</param>
-        /// <returns><code>JObject</code> containg the json representation of the log message.</returns>
+        /// <returns><code>JObject</code> containing the json representation of the log message.</returns>
         private static JObject WriteLogMessage(IAssetsLogMessage logMessage, string projectPath)
         {
             var logJObject = new JObject()
@@ -385,7 +385,7 @@ namespace NuGet.ProjectModel
         /// <summary>
         /// Converts an <code>JObject</code> into an <code>IAssetsLogMessage</code>.
         /// </summary>
-        /// <param name="json"><code>JObject</code> containg the json representation of the log message.</param>
+        /// <param name="json"><code>JObject</code> containing the json representation of the log message.</param>
         /// <returns><code>IAssetsLogMessage</code> representing the log message.</returns>
         private static IAssetsLogMessage ReadLogMessage(JObject json, string projectPath)
         {
@@ -393,7 +393,6 @@ namespace NuGet.ProjectModel
 
             if (json != null)
             {
-
                 var levelJson = json[LogMessageProperties.LEVEL];
                 var codeJson = json[LogMessageProperties.CODE];
                 var warningLevelJson = json[LogMessageProperties.WARNING_LEVEL];
@@ -603,7 +602,7 @@ namespace NuGet.ProjectModel
 
             if (library.EmbedAssemblies.Count > 0)
             {
-                var ordered = library.EmbedAssemblies.OrderBy(assemby => assemby.Path, StringComparer.Ordinal);
+                var ordered = library.EmbedAssemblies.OrderBy(assembly => assembly.Path, StringComparer.Ordinal);
 
                 json[EmbedProperty] = JsonUtility.WriteObject(ordered, WriteFileItem);
             }
