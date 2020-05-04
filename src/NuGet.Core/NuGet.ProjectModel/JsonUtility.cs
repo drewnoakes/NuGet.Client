@@ -18,7 +18,7 @@ namespace NuGet.ProjectModel
         /// <summary>
         /// JsonLoadSettings with line info and comments ignored.
         /// </summary>
-        internal static readonly JsonLoadSettings DefaultLoadSettings = new JsonLoadSettings()
+        private static readonly JsonLoadSettings DefaultLoadSettings = new JsonLoadSettings
         {
             LineInfoHandling = LineInfoHandling.Ignore,
             CommentHandling = CommentHandling.Ignore
